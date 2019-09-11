@@ -1,0 +1,14 @@
+[package]
+name = "string-sum"
+version = "0.1.0"
+edition = "2018"
+authors = ["erik.langenborg@gmail.com"]
+
+[lib]
+name = "string_sum"
+crate-type = ["cdylib"]
+
+
+[dependencies.pyo3]
+version = "0.8.0"
+features = ["extension-module"]
