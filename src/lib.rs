@@ -5,6 +5,27 @@ use rayon::prelude::*;
 use std::fs;
 use std::path::PathBuf;
 
+use ndarray::{ArrayD, ArrayViewD, ArrayViewMutD};
+use numpy::{IntoPyArray, PyArrayDyn};
+use pyo3::prelude::{pymodule, Py, PyModule, PyResult, Python};
+
+fn axpy(a: f64, x: ArrayViewD<f64>, y: ArrayViewD<f64>) -> ArrayD<f64> {
+    a * &x + &y
+}
+
+#[pyfunction]
+fn axpy_py(
+    py: Python,
+    a: f64,
+    x: &PyArrayDyn<f64>,
+    y: &PyArrayDyn<f64>,
+) -> Py<PyArrayDyn<f64>> {
+    let x = x.as_array();
+    let y = y.as_array();
+    axpy(a, x, y).into_pyarray(py).to_owned()
+}
+
+
 #[pyfunction]
 /// Formats the sum of two numbers as string
 fn sum_as_string(a: usize, b: usize) -> PyResult<String> {
@@ -96,6 +117,7 @@ fn count_line(line: &str, needle: &str) -> usize {
 fn string_sum(py: Python, m: &PyModule) -> PyResult<()> {
     m.add_wrapped(wrap_pyfunction!(sum_as_string))?;
     m.add_wrapped(wrap_pyfunction!(torres))?;
+    m.add_wrapped(wrap_pyfunction!(axpy_py))?;
 
     m.add_wrapped(wrap_pyfunction!(count_line))?;
     m.add_class::<WordCounter>()?;
