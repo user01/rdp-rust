@@ -9,7 +9,7 @@ use ndarray::{ArrayD, ArrayViewD};
 // use ndarray::{ArrayD, ArrayViewD, ArrayViewMutD};
 use numpy::{IntoPyArray, PyArrayDyn};
 use pyo3::prelude::{pymodule, Py, PyModule, PyResult, Python};
-
+use pyo3::{IntoPy, PyObject, ToPyObject};
 
 
 pub fn add(a: i32, b: i32) -> i32 {
@@ -40,6 +40,57 @@ mod tests {
         assert_eq!(bad_add(1, 2), 3);
     }
 }
+
+fn cross(x: ArrayViewD<f64>, y: ArrayViewD<f64>) -> i32 {
+    // x[0]
+    32
+}
+
+#[pyfunction]
+fn cross_py(
+    py: Python,
+    x: &PyArrayDyn<f64>,
+    y: &PyArrayDyn<f64>,
+) -> PyObject {
+    (4i32).to_object(py)
+}
+// #[pyfunction]
+// fn cross_py(
+//     py: Python,
+//     x: &PyArrayDyn<f64>,
+//     y: &PyArrayDyn<f64>,
+// ) -> Py<i32> {
+//     let x = x.as_array();
+//     let y = y.as_array();
+//     // cross(x, y).into_py(py)
+//     // cross(x, y)
+//     cross(x, y).into_py(py)
+// }
+
+
+
+// @jit(nopython=True, fastmath=True, cache=True, parallel=False)
+// def np_cross(a, b):
+//     """
+//     Simple numba compatible cross product of vectors.
+
+//     Parameters
+//     ----------
+//     a : [type]
+//         [description]
+//     b : [type]
+//         [description]
+
+//     Returns
+//     -------
+//     [type]
+//         [description]
+//     """
+//     x = a[1] * b[2] - a[2] * b[1]
+//     y = a[2] * b[0] - a[0] * b[2]
+//     z = a[0] * b[1] - a[1] * b[0]
+//     return np.array([x, y, z])
+
 
 fn axpy(a: f64, x: ArrayViewD<f64>, y: ArrayViewD<f64>) -> ArrayD<f64> {
     a * &x + &y
@@ -150,6 +201,7 @@ fn string_sum(py: Python, m: &PyModule) -> PyResult<()> {
     m.add_wrapped(wrap_pyfunction!(sum_as_string))?;
     m.add_wrapped(wrap_pyfunction!(torres))?;
     m.add_wrapped(wrap_pyfunction!(axpy_py))?;
+    m.add_wrapped(wrap_pyfunction!(cross_py))?;
 
     m.add_wrapped(wrap_pyfunction!(count_line))?;
     m.add_class::<WordCounter>()?;
