@@ -52,7 +52,8 @@ fn cross_py(
     x: &PyArrayDyn<f64>,
     y: &PyArrayDyn<f64>,
 ) -> PyObject {
-    (4i32).to_object(py)
+    let x = x.as_array();
+    (x[0]).to_object(py)
 }
 // #[pyfunction]
 // fn cross_py(
