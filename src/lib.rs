@@ -16,8 +16,8 @@ use pyo3::prelude::{pymodule, Py, PyModule, PyResult, Python};
 #[allow(unused_imports)]
 use pyo3::{IntoPy, PyObject, ToPyObject};
 
-use ndarray::arr2;
-use ndarray::Array;
+// use ndarray::arr2;
+// use ndarray::Array;
 
 mod rdp;
 
