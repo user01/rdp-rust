@@ -135,7 +135,7 @@ fn distance_segment<'a, 'b>(
 }
 
 pub fn iter(
-    points: &ndarray::ArrayBase<ndarray::OwnedRepr<f64>, ndarray::Dim<[usize; 2]>>,
+    points: &ndarray::ArrayBase<ndarray::OwnedRepr<f64>, ndarray::Dim<ndarray::IxDynImpl>>,
     epsilon: f64,
 ) -> Vec<bool> {
     let point_count = points.shape()[0];
@@ -194,7 +194,7 @@ pub fn iter(
 }
 
 pub fn mask(
-    points: &ndarray::ArrayBase<ndarray::OwnedRepr<f64>, ndarray::Dim<[usize; 2]>>,
+    points: &ndarray::ArrayBase<ndarray::OwnedRepr<f64>, ndarray::Dim<ndarray::IxDynImpl>>,
     indices: &Vec<bool>,
 ) -> ndarray::ArrayBase<ndarray::OwnedRepr<f64>, ndarray::Dim<[usize; 2]>> {
     // println!("{:?}", indices);
