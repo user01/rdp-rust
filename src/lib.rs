@@ -198,7 +198,7 @@ fn count_line(line: &str, needle: &str) -> usize {
 
 /// This module is a python module implemented in Rust.
 #[pymodule]
-fn string_sum(py: Python, m: &PyModule) -> PyResult<()> {
+fn rdp_rust(py: Python, m: &PyModule) -> PyResult<()> {
     m.add_wrapped(wrap_pyfunction!(sum_as_string))?;
     m.add_wrapped(wrap_pyfunction!(torres))?;
     m.add_wrapped(wrap_pyfunction!(axpy_py))?;

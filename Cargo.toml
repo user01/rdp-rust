@@ -1,17 +1,17 @@
 [package]
-name = "string-sum"
+name = "rdp-rust"
 version = "0.1.0"
 edition = "2018"
 authors = ["erik.langenborg@gmail.com"]
 
 [lib]
-name = "string_sum"
+name = "rdp_rust"
 crate-type = ["cdylib"]
 
 [dependencies]
 rayon = "1.2.0"
 numpy = "0.7.0"
-ndarray = "0.12"
+ndarray = "0.12.1"
 
 [dependencies.pyo3]
 version = "0.8.0"
