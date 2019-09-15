@@ -21,7 +21,7 @@ mod tests {
             [0.0, 2.0],
             [0.0, 1.0],
             [0.0, 0.0],
-        ]);
+        ]).into_dyn();
         let indices = iter(&the_points, 1.0);
         let total = indices.iter().map(|&x| if x { 1 } else { 0 }).fold(0, |total, next| total + next);
         assert_eq!(total, 5);
@@ -54,7 +54,7 @@ mod tests {
             [0.0, 2.0],
             [0.0, 1.0],
             [0.0, 0.0],
-        ]);
+        ]).into_dyn();
 
         b.iter(|| {
             for _ in 0..100 {
