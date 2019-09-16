@@ -6,14 +6,14 @@ from rdp import rdp
 
 def test_two():
     arr = np.array([[1., 1.], [5.0, 5.0]])
-    res_rs = rdp_rust.cross_py(arr, 0.1)
+    res_rs = rdp_rust.reduce_points(arr, 0.1)
     res_py = rdp(arr, 0.1)
     assert res_rs.shape == res_py.shape
     np.testing.assert_almost_equal(res_rs, res_py)
 
 def test_basic():
     arr = np.array([5.0, 0, 4, 0, 3, 0, 3, 1, 3, 2]).reshape(5, 2)
-    res_rs = rdp_rust.cross_py(arr, 0.1)
+    res_rs = rdp_rust.reduce_points(arr, 0.1)
     res_py = rdp(arr, 0.1)
     assert res_rs.shape == res_py.shape
     np.testing.assert_almost_equal(res_rs, res_py)
@@ -29,7 +29,7 @@ small_epsilon = 0.1
     warmup=False,
 )
 def test_rust_version(benchmark):
-    actual = benchmark(rdp_rust.cross_py, small_arr, small_epsilon)
+    actual = benchmark(rdp_rust.reduce_points, small_arr, small_epsilon)
     assert actual.shape == small_expected.shape
     np.testing.assert_almost_equal(actual, small_expected)
 
@@ -62,9 +62,9 @@ medium_expected = np.array([[44.0, 95.0], [22.0, 90.0], [21.0, 90.0], [19.0, 89.
 medium_epsilon = 0.1
 
 def test_medium_line():
-    for epsilon in np.arange(0.1, 3.0, 0.1):
+    for epsilon in np.arange(0.1, 30.0, 0.1):
         result_py = rdp(medium_arr, epsilon)
-        result_rust = rdp_rust.cross_py(medium_arr, epsilon)
+        result_rust = rdp_rust.reduce_points(medium_arr, epsilon)
 
         # np.testing.assert_almost_equal(result_py, result_rust)
         assert result_py.shape == result_rust.shape, f"epsilon: {epsilon}"
@@ -74,7 +74,7 @@ def test_medium_line():
     warmup=False,
 )
 def test_rust_version(benchmark):
-    actual = benchmark(rdp_rust.cross_py, medium_arr, medium_epsilon)
+    actual = benchmark(rdp_rust.reduce_points, medium_arr, medium_epsilon)
     assert actual.shape == medium_expected.shape
     np.testing.assert_almost_equal(actual, medium_expected)
 
