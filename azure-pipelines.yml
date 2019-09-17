@@ -4,37 +4,43 @@ jobs:
   steps:
     - task: UsePythonVersion@0
     - bash: |
-        python -m pip install --upgrade pip
-        pip install cibuildwheel==0.11.1
-        cibuildwheel --output-dir wheelhouse .
-    - task: PublishBuildArtifacts@1
-      inputs: {pathtoPublish: 'wheelhouse'}
-- job: macos
-  pool: {vmImage: 'macOS-10.13'}
-  steps:
-    - task: UsePythonVersion@0
-    - bash: |
-        python -m pip install --upgrade pip
-        pip install cibuildwheel==0.11.1
-        cibuildwheel --output-dir wheelhouse .
-    - task: PublishBuildArtifacts@1
-      inputs: {pathtoPublish: 'wheelhouse'}
-- job: windows
-  pool: {vmImage: 'vs2017-win2016'}
-  steps:
-    - {task: UsePythonVersion@0, inputs: {versionSpec: '2.7', architecture: x86}}
-    - {task: UsePythonVersion@0, inputs: {versionSpec: '2.7', architecture: x64}}
-    - {task: UsePythonVersion@0, inputs: {versionSpec: '3.5', architecture: x86}}
-    - {task: UsePythonVersion@0, inputs: {versionSpec: '3.5', architecture: x64}}
-    - {task: UsePythonVersion@0, inputs: {versionSpec: '3.6', architecture: x86}}
-    - {task: UsePythonVersion@0, inputs: {versionSpec: '3.6', architecture: x64}}
-    - {task: UsePythonVersion@0, inputs: {versionSpec: '3.7', architecture: x86}}
-    - {task: UsePythonVersion@0, inputs: {versionSpec: '3.7', architecture: x64}}
-    - script: choco install vcpython27 -f -y
-      displayName: Install Visual C++ for Python 2.7
-    - bash: |
-        python -m pip install --upgrade pip
-        pip install cibuildwheel==0.11.1
-        cibuildwheel --output-dir wheelhouse .
-    - task: PublishBuildArtifacts@1
-      inputs: {pathtoPublish: 'wheelhouse'}
+        curl https://sh.rustup.rs -sSf --proto '=https' --tlsv1.2 | sh -s -- -y
+        source $HOME/.cargo/env
+        rustup default nightly
+        pip install -r requirements-dev.txt
+        maturin build
+        cargo test --no-default-features
+        pytest -q test_options.py --benchmark-group-by=group
+
+
+    # - task: PublishBuildArtifacts@1
+    #   inputs: {pathtoPublish: 'wheelhouse'}
+# - job: macos
+#   pool: {vmImage: 'macOS-10.13'}
+#   steps:
+#     - task: UsePythonVersion@0
+#     - bash: |
+#         python -m pip install --upgrade pip
+#         pip install cibuildwheel==0.11.1
+#         cibuildwheel --output-dir wheelhouse .
+#     - task: PublishBuildArtifacts@1
+#       inputs: {pathtoPublish: 'wheelhouse'}
+# - job: windows
+#   pool: {vmImage: 'vs2017-win2016'}
+#   steps:
+#     - {task: UsePythonVersion@0, inputs: {versionSpec: '2.7', architecture: x86}}
+#     - {task: UsePythonVersion@0, inputs: {versionSpec: '2.7', architecture: x64}}
+#     - {task: UsePythonVersion@0, inputs: {versionSpec: '3.5', architecture: x86}}
+#     - {task: UsePythonVersion@0, inputs: {versionSpec: '3.5', architecture: x64}}
+#     - {task: UsePythonVersion@0, inputs: {versionSpec: '3.6', architecture: x86}}
+#     - {task: UsePythonVersion@0, inputs: {versionSpec: '3.6', architecture: x64}}
+#     - {task: UsePythonVersion@0, inputs: {versionSpec: '3.7', architecture: x86}}
+#     - {task: UsePythonVersion@0, inputs: {versionSpec: '3.7', architecture: x64}}
+#     - script: choco install vcpython27 -f -y
+#       displayName: Install Visual C++ for Python 2.7
+#     - bash: |
+#         python -m pip install --upgrade pip
+#         pip install cibuildwheel==0.11.1
+#         cibuildwheel --output-dir wheelhouse .
+#     - task: PublishBuildArtifacts@1
+#       inputs: {pathtoPublish: 'wheelhouse'}
