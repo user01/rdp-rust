@@ -14,6 +14,7 @@ jobs:
         wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
         bash Miniconda3-latest-Linux-x86_64.sh -f -b -p /home/vsts/miniconda
         export PATH="/home/vsts/miniconda/bin:$PATH"
+        conda update -n base -c defaults conda
         conda init bash
         source /home/vsts/.bashrc
 
@@ -23,19 +24,20 @@ jobs:
 
         conda activate python37
         pip install -r requirements-dev.txt
-        maturin build
+        maturin build --no-sdist -i python3.7
+        rm -rf target/debug/ target/release/
         cargo test --no-default-features
         pytest -q test_options.py --benchmark-group-by=group
 
         conda activate python36
         pip install -r requirements-dev.txt
-        maturin build
+        maturin build --no-sdist -i python3.6
         cargo test --no-default-features
         pytest -q test_options.py --benchmark-group-by=group
 
         conda activate python35
         pip install -r requirements-dev.txt
-        maturin build
+        maturin build --no-sdist -i python3.5
         cargo test --no-default-features
         pytest -q test_options.py --benchmark-group-by=group
 
