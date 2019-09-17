@@ -4,14 +4,43 @@ jobs:
   steps:
     - task: UsePythonVersion@0
     - bash: |
-        apt-get install libpython3.7-dev
+        apt-get update
+        apt-get install -y wget curl build-essential
+
         curl https://sh.rustup.rs -sSf --proto '=https' --tlsv1.2 | sh -s -- -y
         source $HOME/.cargo/env
         rustup default nightly
+
+        wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
+        bash Miniconda3-latest-Linux-x86_64.sh -f -b -p /root/miniconda
+        export PATH="/root/miniconda/bin:$PATH"
+        conda init bash
+        source /root/.bashrc
+
+        conda create -y --name python37 python=3.7
+        conda create -y --name python36 python=3.6
+        conda create -y --name python35 python=3.5
+
+        conda activate python37
         pip install -r requirements-dev.txt
         maturin build
         cargo test --no-default-features
         pytest -q test_options.py --benchmark-group-by=group
+
+        conda activate python36
+        pip install -r requirements-dev.txt
+        maturin build
+        cargo test --no-default-features
+        pytest -q test_options.py --benchmark-group-by=group
+
+        conda activate python35
+        pip install -r requirements-dev.txt
+        maturin build
+        cargo test --no-default-features
+        pytest -q test_options.py --benchmark-group-by=group
+
+        # Upload the built wheels - requires env vars
+        twine upload target/wheels/rdp_rust*.whl
 
 
     # - task: PublishBuildArtifacts@1
