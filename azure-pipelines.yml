@@ -4,6 +4,7 @@ jobs:
   steps:
     - task: UsePythonVersion@0
     - bash: |
+        apt-get install libpython3.7-dev
         curl https://sh.rustup.rs -sSf --proto '=https' --tlsv1.2 | sh -s -- -y
         source $HOME/.cargo/env
         rustup default nightly
