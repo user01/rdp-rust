@@ -23,9 +23,7 @@ jobs:
         # conda create -y --name python35 python=3.5
 
         conda activate python37
-        conda install gxx_linux-64
-        conda install ncurses
-        conda install pkg-config autoconf automake cmake libtool
+        conda install -y gxx_linux-64 pkg-config autoconf automake cmake libtool
 
         pip install -r requirements-dev.txt
         maturin build --no-sdist -i python3.7
