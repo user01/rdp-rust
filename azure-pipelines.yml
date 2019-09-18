@@ -1,6 +1,6 @@
 jobs:
 - job: linux
-  pool: {vmImage: 'Ubuntu-16.04'}
+  pool: {vmImage: 'Ubuntu-18.04'}
   steps:
     - task: UsePythonVersion@0
     - bash: |
@@ -26,6 +26,8 @@ jobs:
         conda install -y gxx_linux-64 pkg-config autoconf automake cmake libtool
 
         pip install -r requirements-dev.txt
+        echo Pythons
+        maturin list-python
         maturin build --no-sdist -i python3.7
         rm -rf target/debug/ target/release/
         cargo test --no-default-features
