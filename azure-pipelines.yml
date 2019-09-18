@@ -1,11 +1,11 @@
 jobs:
 - job: linux
-  pool: {vmImage: 'Ubuntu-18.04'}
+  pool: {vmImage: 'Ubuntu-16.04'}
   steps:
     - task: UsePythonVersion@0
     - bash: |
         sudo apt-get update
-        sudo apt-get install -y wget curl build-essential
+        sudo apt-get install -y wget curl gcc-4.1 g++-4.1
 
         curl https://sh.rustup.rs -sSf --proto '=https' --tlsv1.2 | sh -s -- -y
         source /home/vsts/.cargo/env
@@ -23,7 +23,7 @@ jobs:
         # conda create -y --name python35 python=3.5
 
         conda activate python37
-        conda install -y gxx_linux-64 pkg-config autoconf automake cmake libtool
+        # conda install -y gxx_linux-64
 
         pip install -r requirements-dev.txt
         echo Pythons
