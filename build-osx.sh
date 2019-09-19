@@ -37,49 +37,49 @@ unset __conda_setup
 # #####################
 # Python 3.7
 
-conda activate python37
+$HOME/miniconda3/bin/conda activate python37
 
-pip install -r requirements-dev.txt
+$HOME/miniconda3/envs/python37/bin/pip install -r requirements-dev.txt
 
-cargo build
-cargo test
+$HOME/.cargo/bin/cargo build
+$HOME/.cargo/bin/cargo test
 
 maturin build --no-sdist -i python3.7
-pip install ./target/wheels/rdp_rust-*-cp37-cp37m-macosx_10_7_x86_64.whl
-pytest -q test_options.py --benchmark-group-by=group
+$HOME/miniconda3/envs/python37/bin/pip install ./target/wheels/rdp_rust-*-cp37-cp37m-macosx_10_7_x86_64.whl
+$HOME/miniconda3/envs/python36/bin/pytest -q test_options.py --benchmark-group-by=group
 
-conda deactivate
+$HOME/miniconda3/bin/conda deactivate
 
 # #####################
 # Python 3.6
 
-conda activate python36
+$HOME/miniconda3/bin/conda activate python36
 
-pip install -r requirements-dev.txt
-rm -rf target/debug/
+$HOME/miniconda3/envs/python36/bin/pip install -r requirements-dev.txt
+rm -rf ./target/debug/
 
-cargo build
-cargo test
+$HOME/.cargo/bin/cargo build
+$HOME/.cargo/bin/cargo test
 
 maturin build --no-sdist -i python3.6
-pip install ./target/wheels/rdp_rust-*-cp36-cp36m-macosx_10_7_x86_64.whl
-pytest -q test_options.py --benchmark-group-by=group
+$HOME/miniconda3/envs/python36/bin/pip install ./target/wheels/rdp_rust-*-cp36-cp36m-macosx_10_7_x86_64.whl
+$HOME/miniconda3/envs/python36/bin/pytest -q test_options.py --benchmark-group-by=group
 
-conda deactivate
+$HOME/miniconda3/bin/conda deactivate
 
 # #####################
 # Python 3.5
 
-conda activate python35
+$HOME/miniconda3/bin/conda activate python35
 
-pip install -r requirements-dev.txt
-rm -rf target/debug/
+$HOME/miniconda3/envs/python35/bin/pip install -r requirements-dev.txt
+rm -rf ./target/debug/
 
-cargo build
-cargo test
+$HOME/.cargo/bin/cargo build
+$HOME/.cargo/bin/cargo test
 
 maturin build --no-sdist -i python3.5
-pip install ./target/wheels/rdp_rust-*-cp35-cp35m-macosx_10_7_x86_64.whl
+$HOME/miniconda3/envs/python35/bin/pip install ./target/wheels/rdp_rust-*-cp35-cp35m-macosx_10_7_x86_64.whl
 # Skip 3.5 due to string formatting in tests
 
-conda deactivate
+$HOME/miniconda3/bin/conda deactivate
