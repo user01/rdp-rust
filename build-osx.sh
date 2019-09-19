@@ -1,16 +1,14 @@
-brew update
-brew install gcc curl wget
 curl https://sh.rustup.rs -sSf --proto '=https' --tlsv1.2 | sh -s -- -y
 $HOME/.cargo/bin/rustup default nightly
 wget https://repo.anaconda.com/miniconda/Miniconda3-latest-MacOSX-x86_64.sh
-bash Miniconda3-latest-MacOSX-x86_64.sh  -f -b -p $HOME/miniconda
-echo "export PATH=\"\$HOME/miniconda/bin:\$PATH\"" >> $HOME/.bashrc
-echo "export PATH=\"\$HOME/miniconda/bin:\$PATH\"" >> $HOME/.bashrc
-$HOME/miniconda/bin/conda update -y -n base -c defaults conda
-$HOME/miniconda/bin/conda init bash
-$HOME/miniconda/bin/conda create -y --name python37 python=3.7
-$HOME/miniconda/bin/conda create -y --name python36 python=3.6
-$HOME/miniconda/bin/conda create -y --name python35 python=3.5
+bash Miniconda3-latest-MacOSX-x86_64.sh  -f -b -p $HOME/miniconda3
+echo "export PATH=\"\$HOME/miniconda3/bin:\$PATH\"" >> $HOME/.bashrc
+echo "export PATH=\"\$HOME/miniconda3/bin:\$PATH\"" >> $HOME/.bashrc
+$HOME/miniconda3/bin/conda update -y -n base -c defaults conda
+$HOME/miniconda3/bin/conda init bash
+$HOME/miniconda3/bin/conda create -y --name python37 python=3.7
+$HOME/miniconda3/bin/conda create -y --name python36 python=3.6
+$HOME/miniconda3/bin/conda create -y --name python35 python=3.5
 
 export PATH="$HOME/.cargo/bin:$PATH"
 # export PATH="$HOME/miniconda/bin:$PATH"  # commented out by conda initialize

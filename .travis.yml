@@ -3,6 +3,13 @@ language: rust
 services:
   - docker
 
+addons:
+  homebrew:
+    packages:
+    - gcc
+    - curl
+    - wget
+
 os:
   - linux
   - osx
