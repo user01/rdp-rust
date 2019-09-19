@@ -1,5 +1,15 @@
 language: rust
-rust:
-  - nightly
+
+services:
+  - docker
+
+os:
+  - linux
+  - osx
+
+before_install:
+  - if [ "$TRAVIS_OS_NAME" = "linux" ]; then docker build -f Dockerfile -t build-img-temp .          ; fi
+
 script:
-  - bash build.sh
+  - if [ "$TRAVIS_OS_NAME" = "linux" ]; then docker run --rm -it -v $PWD:/root/project/ build-img-temp bash /root/project/build.sh          ; fi
+  - if [ "$TRAVIS_OS_NAME" = "osx" ]; then bash build-osx.sh ; fi
