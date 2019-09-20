@@ -76,4 +76,4 @@ conda deactivate
 ls -alh ./target/wheels/
 
 conda activate python37
-twine upload --skip-existing ./target/wheels/rdp_rust*.whl
+if [ -n "$TRAVIS_TAG" ]; then twine upload --skip-existing ./target/wheels/rdp_rust*.whl ; fi

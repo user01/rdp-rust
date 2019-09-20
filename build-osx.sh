@@ -64,4 +64,4 @@ $HOME/miniconda3/envs/python36/bin/pytest -q test_options.py --benchmark-group-b
 # Upload
 
 ls -alh ./target/wheels/
-$HOME/miniconda3/envs/python36/bin/twine upload --skip-existing ./target/wheels/rdp_rust*.whl
+if [ -n "$TRAVIS_TAG" ]; then $HOME/miniconda3/envs/python36/bin/twine upload --skip-existing ./target/wheels/rdp_rust*.whl ; fi
