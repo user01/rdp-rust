@@ -69,3 +69,9 @@ pip install /root/project/target/wheels/rdp_rust-*-cp35-cp35m-manylinux1_x86_64.
 # Skip 3.5 due to string formatting in tests
 
 conda deactivate
+
+# #####################
+# Upload
+
+conda activate python37
+twine ./target/wheels/rdp_rust*.whl

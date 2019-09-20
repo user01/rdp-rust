@@ -59,3 +59,8 @@ $HOME/.cargo/bin/cargo test
 $HOME/miniconda3/envs/python36/bin/maturin build --no-sdist -i python3.6
 $HOME/miniconda3/envs/python36/bin/pip install ./target/wheels/rdp_rust-*-cp36-cp36m-macosx_10_7_x86_64.whl
 $HOME/miniconda3/envs/python36/bin/pytest -q test_options.py --benchmark-group-by=group
+
+# #####################
+# Upload
+
+$HOME/miniconda3/envs/python36/bin/twine ./target/wheels/rdp_rust*.whl
