@@ -76,6 +76,7 @@ rm -rf ./target/debug/
 $HOME/.cargo/bin/cargo build
 $HOME/.cargo/bin/cargo test
 
+$HOME/miniconda3/envs/python35/bin/maturin list-python
 $HOME/miniconda3/envs/python35/bin/maturin build --no-sdist -i python3.5
 $HOME/miniconda3/envs/python35/bin/pip install ./target/wheels/rdp_rust-*-cp35-cp35m-macosx_10_7_x86_64.whl
 # Skip 3.5 due to string formatting in tests
