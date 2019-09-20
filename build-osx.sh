@@ -30,7 +30,7 @@ fi
 unset __conda_setup
 # <<< conda init <<<
 
-
+env
 
 # #####################
 # Python 3.7

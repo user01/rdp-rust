@@ -16,6 +16,7 @@ fi
 unset __conda_setup
 # <<< conda initialize <<<
 
+env
 
 cd /root/project/
 
