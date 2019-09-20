@@ -76,4 +76,4 @@ conda deactivate
 ls -alh ./target/wheels/
 
 conda activate python37
-twine upload ./target/wheels/rdp_rust*.whl
+twine upload --skip-existing ./target/wheels/rdp_rust*.whl
