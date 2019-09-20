@@ -2,3 +2,4 @@ maturin==0.7.2
 pytest==5.1.2
 pytest-benchmark==3.2.2
 rdp==0.8
+twine==1.15.0
