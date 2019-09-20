@@ -16,7 +16,7 @@ fi
 unset __conda_setup
 # <<< conda initialize <<<
 
-env
+echo twine $TWINE_USERNAME
 
 cd /root/project/
 

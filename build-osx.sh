@@ -30,7 +30,8 @@ fi
 unset __conda_setup
 # <<< conda init <<<
 
-env
+echo twine $TWINE_USERNAME
+
 
 # #####################
 # Python 3.7
