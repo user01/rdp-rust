@@ -1,3 +1,5 @@
+set -e
+
 curl https://sh.rustup.rs -sSf --proto '=https' --tlsv1.2 | sh -s -- -y
 $HOME/.cargo/bin/rustup default nightly
 wget https://repo.anaconda.com/miniconda/Miniconda3-latest-MacOSX-x86_64.sh
