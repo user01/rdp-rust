@@ -63,7 +63,7 @@ $HOME/miniconda3/envs/python36/bin/pytest -q test_options.py --benchmark-group-b
 # #####################
 # Python 3.5
 
-$HOME/miniconda3/envs/python36/bin/pip install -r requirements-dev.txt
+$HOME/miniconda3/envs/python35/bin/pip install -r requirements-dev.txt
 rm -rf ./target/debug/
 
 $HOME/.cargo/bin/cargo build
