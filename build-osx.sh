@@ -63,4 +63,5 @@ $HOME/miniconda3/envs/python36/bin/pytest -q test_options.py --benchmark-group-b
 # #####################
 # Upload
 
-$HOME/miniconda3/envs/python36/bin/twine ./target/wheels/rdp_rust*.whl
+ls -alh ./target/wheels/
+$HOME/miniconda3/envs/python36/bin/twine upload ./target/wheels/rdp_rust*.whl

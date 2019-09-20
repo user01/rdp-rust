@@ -73,5 +73,7 @@ conda deactivate
 # #####################
 # Upload
 
+ls -alh ./target/wheels/
+
 conda activate python37
-twine ./target/wheels/rdp_rust*.whl
+twine upload ./target/wheels/rdp_rust*.whl
