@@ -1,4 +1,3 @@
-use ndarray::array;
 use ndarray::Array;
 
 #[cfg(test)]
@@ -38,6 +37,41 @@ mod tests {
                 [2.0, 2.0],
                 [0.0, 2.0],
                 [0.0, 0.0],
+            ])
+        );
+    }
+
+    #[test]
+    fn rdp_simple_3() {
+        // from https://github.com/sebleier/RDP
+
+        let the_points = arr2(&[
+            [0.0, 0.0, 0.0],
+            [1.0, 0.0, 0.0],
+            [2.0, 0.0, 0.0],
+            [2.0, 1.0, 0.0],
+            [2.0, 2.0, 0.0],
+            [1.0, 2.0, 0.0],
+            [0.0, 2.0, 0.0],
+            [0.0, 1.0, 0.0],
+            [0.0, 0.0, 0.0],
+        ]).into_dyn();
+        let indices = iter(&the_points, 1.0);
+        let total = indices.iter().map(|&x| if x { 1 } else { 0 }).fold(0, |total, next| total + next);
+        assert_eq!(total, 5);
+        let final_points = mask(&the_points, &indices);
+        assert_eq!(
+            indices,
+            vec![true, false, true, false, true, false, true, false, true]
+        );
+        assert_eq!(
+            final_points,
+            arr2(&[
+                [0.0, 0.0, 0.0],
+                [2.0, 0.0, 0.0],
+                [2.0, 2.0, 0.0],
+                [0.0, 2.0, 0.0],
+                [0.0, 0.0, 0.0],
             ])
         );
     }
@@ -89,13 +123,12 @@ mod tests {
     }
 }
 
-fn norm<'a>(
+fn norm<'a, 'b>(
     point_01: &'a ndarray::ArrayBase<ndarray::ViewRepr<&f64>, ndarray::Dim<[usize; 1]>>,
-    point_02: &'a ndarray::ArrayBase<ndarray::ViewRepr<&f64>, ndarray::Dim<[usize; 1]>>,
+    point_02: &'b ndarray::ArrayBase<ndarray::ViewRepr<&f64>, ndarray::Dim<[usize; 1]>>,
 ) -> f64 {
-    let x = point_01[0] - point_02[0];
-    let y = point_01[1] - point_02[1];
-    (x * x + y * y).sqrt()
+    let diff = point_01 - point_02;
+    (&diff * &diff).sum().sqrt()
 }
 
 fn distance_segment<'a, 'b>(
@@ -206,9 +239,18 @@ pub fn mask(
     for idx in 0..points.shape()[0] {
         if indices[idx] {
             let point_test = &points.slice(s![idx, ..]);
-            final_points.push(point_test[0]);
-            final_points.push(point_test[1]);
+            for pt in point_test.iter() {
+                final_points.push(*pt);
+            }
         }
     }
-    Array::from_shape_vec((final_points.len() / 2, 2), final_points).expect("Unable to build")
+    Array::from_shape_vec(
+        (
+            final_points.len() / points.shape()[1],
+            points.shape()[1]
+        ),
+        final_points,
+    ).expect(
+        "Unable to build"
+    )
 }
