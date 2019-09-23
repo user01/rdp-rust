@@ -119,19 +119,19 @@ fn distance_segment<'a, 'b>(
     // println!("segment_sqr_length {}", segment_sqr_length);
     let t = (&segment * &point_start).sum() / segment_sqr_length;
     // println!("{}", t);
-    let x = (t * segment) + start;
 
-    let (near_pt_x, near_pt_y) = if t < 0.0 {
-        (start[0], start[1])
+    let dist = if t < 0.0 {
+        norm(point, &start.slice(s![..]))
     } else if t >= 1.0 {
-        (end[0], end[1])
+        norm(point, &end.slice(s![..]))
     } else {
-        (x[0], x[1])
+        let x = (t * segment) + start;
+        let y = &(x.view());
+        norm(point, &y.slice(s![..]))
     };
-    let near_pt = array![near_pt_x, near_pt_y];
-    // println!("Near {}", near_pt);
+    // println!("Distance {}", dist);
 
-    norm(point, &near_pt.slice(s![..]))
+    dist
 }
 
 pub fn iter(
