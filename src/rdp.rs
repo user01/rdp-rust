@@ -76,6 +76,39 @@ mod tests {
         );
     }
 
+    #[test]
+    fn rdp_simple_twist() {
+
+        let the_points = arr2(&[
+            [0.0,0.0,0.0],
+            [0.0,5.0,0.1],
+            [0.0,10.0,0.0],
+            [0.4,10.0,5.0],
+            [0.0,10.0,10.0],
+            [2.0,10.1,11.0],
+            [5.0,10.1,9.7],
+            [7.0,10.03,9.8],
+            [10.0,10.0,10.0],
+        ]).into_dyn();
+        let indices = iter(&the_points, 2.0);
+        let total = indices.iter().map(|&x| if x { 1 } else { 0 }).fold(0, |total, next| total + next);
+        assert_eq!(total, 4);
+        let final_points = mask(&the_points, &indices);
+        assert_eq!(
+            indices,
+            vec![true, false, true, false, true, false, false, false, true]
+        );
+        assert_eq!(
+            final_points,
+            arr2(&[
+                [ 0.,  0.,  0.],
+                [ 0., 10.,  0.],
+                [ 0., 10., 10.],
+                [10., 10., 10.],
+            ])
+        );
+    }
+
     #[bench]
     fn bench_100_simple_rdp(b: &mut Bencher) {
         let the_points = arr2(&[
