@@ -8,7 +8,7 @@ test: clean install
 	pytest -q test_options.py --benchmark-group-by=group
 
 target/wheels/rdp_rust-*-cp37-cp37m-macosx_10_7_x86_64.whl:
-	maturin build
+	maturin build --release
 
 install: target/wheels/rdp_rust-*-cp37-cp37m-macosx_10_7_x86_64.whl
 	-yes | pip uninstall rdp_rust

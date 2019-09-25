@@ -30,7 +30,7 @@ pip install -r requirements-dev.txt
 cargo build
 cargo test
 
-maturin build --no-sdist -i python3.7
+maturin build --release --no-sdist -i python3.7
 pip install /root/project/target/wheels/rdp_rust-*-cp37-cp37m-manylinux1_x86_64.whl
 pytest -q test_options.py --benchmark-group-by=group
 
@@ -47,7 +47,7 @@ rm -rf target/debug/
 cargo build
 cargo test
 
-maturin build --no-sdist -i python3.6
+maturin build --release --no-sdist -i python3.6
 pip install /root/project/target/wheels/rdp_rust-*-cp36-cp36m-manylinux1_x86_64.whl
 pytest -q test_options.py --benchmark-group-by=group
 
@@ -64,7 +64,7 @@ rm -rf target/debug/
 cargo build
 cargo test
 
-maturin build --no-sdist -i python3.5
+maturin build --release --no-sdist -i python3.5
 pip install /root/project/target/wheels/rdp_rust-*-cp35-cp35m-manylinux1_x86_64.whl
 # Skip 3.5 due to string formatting in tests
 
