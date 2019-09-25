@@ -5,7 +5,8 @@ RUN apt install -y curl build-essential wget
 
 RUN curl https://sh.rustup.rs -sSf --proto '=https' --tlsv1.2 | sh -s -- -y
 RUN cat $HOME/.cargo/env >> $HOME/.bashrc
-RUN /root/.cargo/bin/rustup default nightly
+RUN /root/.cargo/bin/rustup install nightly-2019-09-11
+RUN /root/.cargo/bin/rustup default nightly-2019-09-11
 
 RUN wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
 RUN bash Miniconda3-latest-Linux-x86_64.sh -f -b -p $HOME/miniconda

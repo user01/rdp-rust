@@ -1,7 +1,8 @@
 set -e
 
 curl https://sh.rustup.rs -sSf --proto '=https' --tlsv1.2 | sh -s -- -y
-$HOME/.cargo/bin/rustup default nightly
+$HOME/.cargo/bin/rustup install nightly-2019-09-11
+$HOME/.cargo/bin/rustup default nightly-2019-09-11
 wget https://repo.anaconda.com/miniconda/Miniconda3-latest-MacOSX-x86_64.sh
 bash Miniconda3-latest-MacOSX-x86_64.sh  -f -b -p $HOME/miniconda3
 echo "export PATH=\"\$HOME/miniconda3/bin:\$PATH\"" >> $HOME/.bashrc
