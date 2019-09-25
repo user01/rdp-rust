@@ -9,7 +9,7 @@ use numpy::{IntoPyArray, PyArrayDyn};
 use pyo3::prelude::{pymodule, Py, PyModule, PyResult, Python};
 #[allow(unused_imports)]
 use pyo3::{IntoPy, PyObject, ToPyObject};
-
+use pyo3::exceptions;
 
 mod rdp;
 
@@ -31,11 +31,22 @@ fn reduce_points(
     epsilon: f64,
 ) -> PyResult<Py<PyArrayDyn<f64>>> {
     let the_points = points.as_array().to_owned();
-    let indices = rdp::iter(&the_points, epsilon);
-    let final_points = rdp::mask(&the_points, &indices);
-    Ok(
-        final_points.into_dyn().into_pyarray(py).to_owned()
-    )
+    let dims = &the_points.shape().len();
+    if *dims != 2 {
+        Err(
+            exceptions::ValueError::py_err("Incorrect shape. Must be numpy floating of n points by d dimension")
+        )
+    } else if epsilon < 0.0 {
+        Err(
+            exceptions::ValueError::py_err("Epsilon must be a float greater than 0")
+        )
+    } else {
+        let indices = rdp::iter(&the_points, epsilon);
+        let final_points = rdp::mask(&the_points, &indices);
+        Ok(
+            final_points.into_dyn().into_pyarray(py).to_owned()
+        )
+    }
 }
 
 
