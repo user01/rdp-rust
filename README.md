@@ -31,3 +31,7 @@ array([[5., 0.],
        [3., 0.],
        [3., 2.]])
 ```
+
+## Example
+
+![Demo of RDP](https://github.com/user01/rdp-rust/raw/master/rdp-demo.gif "Demo of RDP")
