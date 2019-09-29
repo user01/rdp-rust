@@ -18,13 +18,5 @@ before_install:
   - if [ "$TRAVIS_OS_NAME" = "linux" ]; then docker build -f Dockerfile -t build-img-temp .          ; fi
 
 script:
-  - if [ "$TRAVIS_OS_NAME" = "linux" ]; then docker run --rm -it -e TRAVIS_TAG -e TWINE_USERNAME -e TWINE_PASSWORD -e TWINE_REPOSITORY -e TWINE_REPOSITORY_URL -v $PWD:/root/project/ build-img-temp bash /root/project/build.sh          ; fi
+  - if [ "$TRAVIS_OS_NAME" = "linux" ]; then docker run --rm -it -e TRAVIS_TAG -e TWINE_USERNAME -e TWINE_PASSWORD -v $PWD:/root/project/ build-img-temp bash /root/project/build.sh          ; fi
   - if [ "$TRAVIS_OS_NAME" = "osx" ]; then bash build-osx.sh ; fi
-
-
-env:
-  global:
-  - TWINE_REPOSITORY=https://pypi.org/legacy/
-  - TWINE_REPOSITORY_URL=https://pypi.org/legacy/
-  - secure: MJcCHyacNcGu5oMyS6Y04kYbA9qxb1D75zarQuMaeMbcLsxyeFsG5xWFvAggfje1Ue5Ajw0uxuh1bVN1uYKHIfPf/vaDN4XqfVXJdiekXlI1lTGCZ3DKZq5lOf/lsqHgoop8nc7xmqh0FEhpxtWS5Ov7bLmIEB309Kt5BmvgSMhuXVZtP56aBTtiI2qJf3MHftS6AfOnP/U22n4RGY+f/h/xK/Vzvj03cYPnr4ACRNOOUcM1tPj+jZXwO7rBcCFVYCfIW63QtavfIz06O6zxQJ1Z2dnTpIQkhfIoXnEelemMiNAD1phNjAp93S1CRRAjI/KnPSgHVy7ThdOzJfHSPoSGhBOPRd7Q/pFFwgrS0n+u3bgCAP3MdW7//CuW74JZNQ/F6dFpogOYvTHQ1eKWszJ6GnYzdRkT/Jcsg5nUhmlHmYhqW9T3fO9kjcgybGdzH/9wZBBtBsuvrKbm15UngCK5k0N9ABgQqllFhz/32mUZjRYt4eyfFEfD55Ekx95Q5xh8fXzwVU14m3KlixUN+iTMyYJ0GQnpx7+Fs8hiVLJu08YJgZw1XYNs9IK3NQViomin6V8OSEYCMhcbcMwAuUWcneYSPPKf4si4Y2N21Ju4uEBShIVXbksfNh/rfw9yo5jEgFWH0JzM+PrO6qgF5cx2T7JimTjSal0tmqiTLK4=
-  - secure: igBQjXVNv8wY7aVraUp69mbTIVE09jaThb1Ur5LfO9WQ1gugtcJsrBUHM0AjDV3twQZQJcBxxnP2ki4vevlTZqjIvP4qDvzvuEQZ+ujIp/E0njNms9g80L7TlVMB7GI6XxUFa8Mr/3oe7N7tnMIieWEzZki9X4DW1WUhCejTTYaAwKSkNzRM72k6WHSnnArLRORT8znEM3SoAfaMOsJ6lONWVt0R9mJe4CHmcB8gpG5bmYvX0iqJQpkg6BVOVFQ9CdassI59SH4khnPjzNOXKIJLzQf4ceFMKJAJM/DcCays0qdeTyrmT7CT1lQI3iyy6lu4hGu6rYWY7bMlQ3ZJ1TW6vVJDGMlWxsavilOTcG3HZa6I7xW83dkd3kvUQYQQBtaCBUB29TLUtvZt3gfL6Zxj3W4MW1vbam+kOrll+mSPZ+WeAiGO6ArUYrhRKgO/7ixDAZ4vpsZcr5IqpNnFVU1kfaQWXClfHH8grmlXzve+cvDUDOqzm3aGdWSMfe9DQ+pbaxVWPdiFPDSAYxBN7ZzHV3dp5MDYLpn1pQ5C+1WTKKkPJ6TJeubJoxXT0yNl+r7X6RZMKpYVQ2DZdXB0OtDqCGIh118ie1mD3NdtglycOye4O31XizvJ0AJY8KnKqiir4V2kICY6SeY7iJTybp7mZbmhvfasFg5o9jQUOhM=
