@@ -32,6 +32,15 @@ array([[5., 0.],
        [3., 2.]])
 ```
 
+```python
+>>> import numpy as np
+>>> from rdp_rust import mask_points
+
+>>> arr = np.array([5.0, 0, 4, 0, 3, 0, 3, 1, 3, 2]).reshape(5, 2)
+>>> mask_points(small_arr, 0.2)
+array([ True, False,  True, False,  True])
+```
+
 ## Example
 
 ![Demo of RDP](https://github.com/user01/rdp-rust/raw/master/rdp-demo.gif "Demo of RDP")
