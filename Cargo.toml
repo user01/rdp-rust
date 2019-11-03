@@ -5,6 +5,7 @@ edition = "2018"
 authors = ["erik.langenborg@gmail.com"]
 license = "MIT"
 readme = "README.md"
+url = "https://github.com/user01/rdp-rust"
 
 [lib]
 name = "rdp_rust"
