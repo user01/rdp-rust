@@ -5,7 +5,7 @@ build:
 test: clean install
 	cargo test --no-default-features
 	cargo bench
-	pytest -q test_options.py --benchmark-group-by=group
+	pytest -q test_options.py
 
 target/wheels/rdp_rust-*-cp37-cp37m-macosx_10_7_x86_64.whl:
 	maturin build --release
