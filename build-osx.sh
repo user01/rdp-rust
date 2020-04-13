@@ -41,18 +41,20 @@ echo twine $TWINE_USERNAME
 # Python 3.8
 
 $HOME/miniconda3/envs/python38/bin/pip install -r requirements-dev.txt
+rm -rf ./target/debug/
 
 $HOME/.cargo/bin/cargo build
 $HOME/.cargo/bin/cargo test
 
 $HOME/miniconda3/envs/python38/bin/maturin build --release --no-sdist -i python3.8
-$HOME/miniconda3/envs/python38/bin/pip install ./target/wheels/rdp_rust-*-cp38-cp38m-macosx_10_7_x86_64.whl
+$HOME/miniconda3/envs/python38/bin/pip install ./target/wheels/rdp_rust-*-cp38-cp38-macosx_10_7_x86_64.whl
 $HOME/miniconda3/envs/python38/bin/pytest -q test_options.py --benchmark-group-by=group
 
 # #####################
 # Python 3.7
 
 $HOME/miniconda3/envs/python37/bin/pip install -r requirements-dev.txt
+rm -rf ./target/debug/
 
 $HOME/.cargo/bin/cargo build
 $HOME/.cargo/bin/cargo test
