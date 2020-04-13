@@ -31,7 +31,7 @@ cargo build
 cargo test
 
 maturin build --release --no-sdist -i python3.8
-pip install /root/project/target/wheels/rdp_rust-*-cp38-cp38m-manylinux1_x86_64.whl
+pip install /root/project/target/wheels/rdp_rust-*-cp38-cp38-manylinux1_x86_64.whl
 pytest -q test_options.py --benchmark-group-by=group
 
 conda deactivate
