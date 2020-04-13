@@ -9,6 +9,7 @@ echo "export PATH=\"\$HOME/miniconda3/bin:\$PATH\"" >> $HOME/.bashrc
 echo "export PATH=\"\$HOME/miniconda3/bin:\$PATH\"" >> $HOME/.bashrc
 $HOME/miniconda3/bin/conda update -y -n base -c defaults conda
 $HOME/miniconda3/bin/conda init bash
+$HOME/miniconda3/bin/conda create -y --name python38 python=3.8
 $HOME/miniconda3/bin/conda create -y --name python37 python=3.7
 $HOME/miniconda3/bin/conda create -y --name python36 python=3.6
 $HOME/miniconda3/bin/conda create -y --name python35 python=3.5
@@ -35,6 +36,18 @@ unset __conda_setup
 
 echo twine $TWINE_USERNAME
 
+
+# #####################
+# Python 3.8
+
+$HOME/miniconda3/envs/python38/bin/pip install -r requirements-dev.txt
+
+$HOME/.cargo/bin/cargo build
+$HOME/.cargo/bin/cargo test
+
+$HOME/miniconda3/envs/python38/bin/maturin build --release --no-sdist -i python3.8
+$HOME/miniconda3/envs/python38/bin/pip install ./target/wheels/rdp_rust-*-cp38-cp38m-macosx_10_7_x86_64.whl
+$HOME/miniconda3/envs/python38/bin/pytest -q test_options.py --benchmark-group-by=group
 
 # #####################
 # Python 3.7

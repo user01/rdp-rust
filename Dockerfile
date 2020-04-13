@@ -14,6 +14,7 @@ RUN echo "export PATH=\"\$HOME/miniconda/bin:\$PATH\"" >> $HOME/.bashrc
 
 RUN $HOME/miniconda/bin/conda update -y -n base -c defaults conda
 RUN $HOME/miniconda/bin/conda init bash
+RUN $HOME/miniconda/bin/conda create -y --name python38 python=3.8
 RUN $HOME/miniconda/bin/conda create -y --name python37 python=3.7
 RUN $HOME/miniconda/bin/conda create -y --name python36 python=3.6
 RUN $HOME/miniconda/bin/conda create -y --name python35 python=3.5
