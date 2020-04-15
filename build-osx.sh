@@ -1,4 +1,5 @@
 set -e
+set -x #echo on
 
 curl https://sh.rustup.rs -sSf --proto '=https' --tlsv1.2 | sh -s -- -y
 $HOME/.cargo/bin/rustup install nightly-2019-09-11
@@ -40,44 +41,47 @@ echo twine $TWINE_USERNAME
 # #####################
 # Python 3.8
 
+$HOME/miniconda3/bin/conda activate python38
 $HOME/miniconda3/envs/python38/bin/pip install -r requirements-dev.txt
 rm -rf ./target/debug/
 
 $HOME/.cargo/bin/cargo build
 $HOME/.cargo/bin/cargo test
 
-$HOME/miniconda3/bin/conda activate python38
 $HOME/miniconda3/envs/python38/bin/maturin build --release --no-sdist -i python3.8
 $HOME/miniconda3/envs/python38/bin/pip install ./target/wheels/rdp_rust-*-cp38-cp38-macosx_10_7_x86_64.whl
 $HOME/miniconda3/envs/python38/bin/pytest -q test_options.py --benchmark-group-by=group
+$HOME/miniconda3/bin/conda deactivate
 
 # #####################
 # Python 3.7
 
+$HOME/miniconda3/bin/conda activate python37
 $HOME/miniconda3/envs/python37/bin/pip install -r requirements-dev.txt
 rm -rf ./target/debug/
 
 $HOME/.cargo/bin/cargo build
 $HOME/.cargo/bin/cargo test
 
-$HOME/miniconda3/bin/conda activate python37
 $HOME/miniconda3/envs/python37/bin/maturin build --release --no-sdist -i python3.7
 $HOME/miniconda3/envs/python37/bin/pip install ./target/wheels/rdp_rust-*-cp37-cp37m-macosx_10_7_x86_64.whl
 $HOME/miniconda3/envs/python37/bin/pytest -q test_options.py --benchmark-group-by=group
+$HOME/miniconda3/bin/conda deactivate
 
 # #####################
 # Python 3.6
 
+$HOME/miniconda3/bin/conda activate python36
 $HOME/miniconda3/envs/python36/bin/pip install -r requirements-dev.txt
 rm -rf ./target/debug/
 
 $HOME/.cargo/bin/cargo build
 $HOME/.cargo/bin/cargo test
 
-$HOME/miniconda3/bin/conda activate python36
 $HOME/miniconda3/envs/python36/bin/maturin build --release --no-sdist -i python3.6
 $HOME/miniconda3/envs/python36/bin/pip install ./target/wheels/rdp_rust-*-cp36-cp36m-macosx_10_7_x86_64.whl
 $HOME/miniconda3/envs/python36/bin/pytest -q test_options.py --benchmark-group-by=group
+$HOME/miniconda3/bin/conda deactivate
 
 # #####################
 # Upload
