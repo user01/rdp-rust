@@ -4,7 +4,7 @@ use ndarray::Array;
 mod tests {
     use super::*;
     use ndarray::arr2;
-    use test::Bencher;
+    // use test::Bencher;
 
     #[test]
     fn rdp_simple() {
@@ -109,27 +109,27 @@ mod tests {
         );
     }
 
-    #[bench]
-    fn bench_100_simple_rdp(b: &mut Bencher) {
-        let the_points = arr2(&[
-            [0.0, 0.0],
-            [1.0, 0.0],
-            [2.0, 0.0],
-            [2.0, 1.0],
-            [2.0, 2.0],
-            [1.0, 2.0],
-            [0.0, 2.0],
-            [0.0, 1.0],
-            [0.0, 0.0],
-        ]).into_dyn();
+    // #[bench]
+    // fn bench_100_simple_rdp(b: &mut Bencher) {
+    //     let the_points = arr2(&[
+    //         [0.0, 0.0],
+    //         [1.0, 0.0],
+    //         [2.0, 0.0],
+    //         [2.0, 1.0],
+    //         [2.0, 2.0],
+    //         [1.0, 2.0],
+    //         [0.0, 2.0],
+    //         [0.0, 1.0],
+    //         [0.0, 0.0],
+    //     ]).into_dyn();
 
-        b.iter(|| {
-            for _ in 0..100 {
-                let n = test::black_box(&the_points);
-                iter(n, 1.0);
-            }
-        });
-    }
+    //     b.iter(|| {
+    //         for _ in 0..100 {
+    //             let n = test::black_box(&the_points);
+    //             iter(n, 1.0);
+    //         }
+    //     });
+    // }
 
     #[test]
     fn test_norm_zero() {
@@ -174,7 +174,7 @@ fn distance_segment<'a, 'b>(
     // println!("start {}", start);
     // println!("end {}", end);
 
-    if start.all_close(end, 1e-8) {
+    if start.abs_diff_eq(end, 1e-8) {
         // println!("diff is zero");
         return norm(point, start);
     }

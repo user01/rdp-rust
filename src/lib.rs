@@ -1,15 +1,13 @@
-#![feature(test)]
 
 use pyo3::prelude::*;
 use pyo3::wrap_pyfunction;
+use pyo3::exceptions::PyValueError;
 #[macro_use] extern crate ndarray;
-extern crate test;
 
 use numpy::{IntoPyArray, PyArrayDyn};
 use pyo3::prelude::{pymodule, Py, PyModule, PyResult, Python};
 #[allow(unused_imports)]
 use pyo3::{IntoPy, PyObject, ToPyObject};
-use pyo3::exceptions;
 use ndarray::Array;
 
 mod rdp;
@@ -31,15 +29,15 @@ fn reduce_points(
     points: &PyArrayDyn<f64>,
     epsilon: f64,
 ) -> PyResult<Py<PyArrayDyn<f64>>> {
-    let the_points = points.as_array().to_owned();
+    let the_points = unsafe { points.as_array().to_owned() };
     let dims = &the_points.shape().len();
     if *dims != 2 {
         Err(
-            exceptions::ValueError::py_err("Incorrect shape. Must be numpy floating of n points by d dimension")
+            PyValueError::new_err("Incorrect shape. Must be numpy floating of n points by d dimension")
         )
     } else if epsilon < 0.0 {
         Err(
-            exceptions::ValueError::py_err("Epsilon must be a float greater than 0")
+            PyValueError::new_err("Epsilon must be a float greater than 0")
         )
     } else {
         let indices = rdp::iter(&the_points, epsilon);
@@ -68,15 +66,15 @@ fn mask_points(
     points: &PyArrayDyn<f64>,
     epsilon: f64,
 ) -> PyResult<Py<PyArrayDyn<bool>>> {
-    let the_points = points.as_array().to_owned();
+    let the_points = unsafe { points.as_array().to_owned() };
     let dims = &the_points.shape().len();
     if *dims != 2 {
         Err(
-            exceptions::ValueError::py_err("Incorrect shape. Must be numpy floating of n points by d dimension")
+            PyValueError::new_err("Incorrect shape. Must be numpy floating of n points by d dimension")
         )
     } else if epsilon < 0.0 {
         Err(
-            exceptions::ValueError::py_err("Epsilon must be a float greater than 0")
+            PyValueError::new_err("Epsilon must be a float greater than 0")
         )
     } else {
         let indices = rdp::iter(&the_points, epsilon);
