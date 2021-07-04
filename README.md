@@ -1,11 +1,11 @@
 
 # RDP Rust
 
-[![Build Status](https://travis-ci.org/user01/rdp-rust.svg?branch=master)](https://travis-ci.org/user01/rdp-rust)
+[![Rust](https://github.com/user01/rdp-rust/actions/workflows/rust.yml/badge.svg?branch=master)](https://github.com/user01/rdp-rust/actions/workflows/rust.yml)
 
 Binary version of MIT licensed RDP [implementation](https://github.com/fhirschmann/rdp) by [fhirschmann](https://github.com/fhirschmann).
 
-Wheels are built for Linux Python 3.5, 3.6, and 3.7. OS X wheels are built for 3.6 and 3.7.
+Binary wheels are built for Python 3.6, 3.7, 3.8, and 3.9.
 
 Benchmarks show approximately 60x speed increase.
 
