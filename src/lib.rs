@@ -1,16 +1,14 @@
-#![feature(test)]
-
+use pyo3::exceptions::PyValueError;
 use pyo3::prelude::*;
 use pyo3::wrap_pyfunction;
-#[macro_use] extern crate ndarray;
-extern crate test;
+#[macro_use]
+extern crate ndarray;
 
+use ndarray::Array;
 use numpy::{IntoPyArray, PyArrayDyn};
 use pyo3::prelude::{pymodule, Py, PyModule, PyResult, Python};
 #[allow(unused_imports)]
 use pyo3::{IntoPy, PyObject, ToPyObject};
-use pyo3::exceptions;
-use ndarray::Array;
 
 mod rdp;
 
@@ -31,22 +29,20 @@ fn reduce_points(
     points: &PyArrayDyn<f64>,
     epsilon: f64,
 ) -> PyResult<Py<PyArrayDyn<f64>>> {
-    let the_points = points.as_array().to_owned();
+    let the_points = unsafe { points.as_array().to_owned() };
     let dims = &the_points.shape().len();
     if *dims != 2 {
-        Err(
-            exceptions::ValueError::py_err("Incorrect shape. Must be numpy floating of n points by d dimension")
-        )
+        Err(PyValueError::new_err(
+            "Incorrect shape. Must be numpy floating of n points by d dimension",
+        ))
     } else if epsilon < 0.0 {
-        Err(
-            exceptions::ValueError::py_err("Epsilon must be a float greater than 0")
-        )
+        Err(PyValueError::new_err(
+            "Epsilon must be a float greater than 0",
+        ))
     } else {
         let indices = rdp::iter(&the_points, epsilon);
         let final_points = rdp::mask(&the_points, &indices);
-        Ok(
-            final_points.into_dyn().into_pyarray(py).to_owned()
-        )
+        Ok(final_points.into_dyn().into_pyarray(py).to_owned())
     }
 }
 
@@ -68,30 +64,22 @@ fn mask_points(
     points: &PyArrayDyn<f64>,
     epsilon: f64,
 ) -> PyResult<Py<PyArrayDyn<bool>>> {
-    let the_points = points.as_array().to_owned();
+    let the_points = unsafe { points.as_array().to_owned() };
     let dims = &the_points.shape().len();
     if *dims != 2 {
-        Err(
-            exceptions::ValueError::py_err("Incorrect shape. Must be numpy floating of n points by d dimension")
-        )
+        Err(PyValueError::new_err(
+            "Incorrect shape. Must be numpy floating of n points by d dimension",
+        ))
     } else if epsilon < 0.0 {
-        Err(
-            exceptions::ValueError::py_err("Epsilon must be a float greater than 0")
-        )
+        Err(PyValueError::new_err(
+            "Epsilon must be a float greater than 0",
+        ))
     } else {
         let indices = rdp::iter(&the_points, epsilon);
-        let result = Array::from_shape_vec(
-            indices.len(),
-            indices,
-        ).expect(
-            "Unable to build"
-        );
-        Ok(
-            result.into_dyn().into_pyarray(py).to_owned()
-        )
+        let result = Array::from_shape_vec(indices.len(), indices).expect("Unable to build");
+        Ok(result.into_dyn().into_pyarray(py).to_owned())
     }
 }
-
 
 #[pymodule]
 fn rdp_rust(_py: Python, m: &PyModule) -> PyResult<()> {

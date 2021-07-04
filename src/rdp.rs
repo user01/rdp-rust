@@ -4,7 +4,6 @@ use ndarray::Array;
 mod tests {
     use super::*;
     use ndarray::arr2;
-    use test::Bencher;
 
     #[test]
     fn rdp_simple() {
@@ -20,9 +19,13 @@ mod tests {
             [0.0, 2.0],
             [0.0, 1.0],
             [0.0, 0.0],
-        ]).into_dyn();
+        ])
+        .into_dyn();
         let indices = iter(&the_points, 1.0);
-        let total = indices.iter().map(|&x| if x { 1 } else { 0 }).fold(0, |total, next| total + next);
+        let total = indices
+            .iter()
+            .map(|&x| if x { 1 } else { 0 })
+            .fold(0, |total, next| total + next);
         assert_eq!(total, 5);
         let final_points = mask(&the_points, &indices);
         assert_eq!(
@@ -31,13 +34,7 @@ mod tests {
         );
         assert_eq!(
             final_points,
-            arr2(&[
-                [0.0, 0.0],
-                [2.0, 0.0],
-                [2.0, 2.0],
-                [0.0, 2.0],
-                [0.0, 0.0],
-            ])
+            arr2(&[[0.0, 0.0], [2.0, 0.0], [2.0, 2.0], [0.0, 2.0], [0.0, 0.0],])
         );
     }
 
@@ -55,9 +52,13 @@ mod tests {
             [0.0, 2.0, 0.0],
             [0.0, 1.0, 0.0],
             [0.0, 0.0, 0.0],
-        ]).into_dyn();
+        ])
+        .into_dyn();
         let indices = iter(&the_points, 1.0);
-        let total = indices.iter().map(|&x| if x { 1 } else { 0 }).fold(0, |total, next| total + next);
+        let total = indices
+            .iter()
+            .map(|&x| if x { 1 } else { 0 })
+            .fold(0, |total, next| total + next);
         assert_eq!(total, 5);
         let final_points = mask(&the_points, &indices);
         assert_eq!(
@@ -78,20 +79,23 @@ mod tests {
 
     #[test]
     fn rdp_simple_twist() {
-
         let the_points = arr2(&[
-            [0.0,0.0,0.0],
-            [0.0,5.0,0.1],
-            [0.0,10.0,0.0],
-            [0.4,10.0,5.0],
-            [0.0,10.0,10.0],
-            [2.0,10.1,11.0],
-            [5.0,10.1,9.7],
-            [7.0,10.03,9.8],
-            [10.0,10.0,10.0],
-        ]).into_dyn();
+            [0.0, 0.0, 0.0],
+            [0.0, 5.0, 0.1],
+            [0.0, 10.0, 0.0],
+            [0.4, 10.0, 5.0],
+            [0.0, 10.0, 10.0],
+            [2.0, 10.1, 11.0],
+            [5.0, 10.1, 9.7],
+            [7.0, 10.03, 9.8],
+            [10.0, 10.0, 10.0],
+        ])
+        .into_dyn();
         let indices = iter(&the_points, 2.0);
-        let total = indices.iter().map(|&x| if x { 1 } else { 0 }).fold(0, |total, next| total + next);
+        let total = indices
+            .iter()
+            .map(|&x| if x { 1 } else { 0 })
+            .fold(0, |total, next| total + next);
         assert_eq!(total, 4);
         let final_points = mask(&the_points, &indices);
         assert_eq!(
@@ -100,35 +104,8 @@ mod tests {
         );
         assert_eq!(
             final_points,
-            arr2(&[
-                [ 0.,  0.,  0.],
-                [ 0., 10.,  0.],
-                [ 0., 10., 10.],
-                [10., 10., 10.],
-            ])
+            arr2(&[[0., 0., 0.], [0., 10., 0.], [0., 10., 10.], [10., 10., 10.],])
         );
-    }
-
-    #[bench]
-    fn bench_100_simple_rdp(b: &mut Bencher) {
-        let the_points = arr2(&[
-            [0.0, 0.0],
-            [1.0, 0.0],
-            [2.0, 0.0],
-            [2.0, 1.0],
-            [2.0, 2.0],
-            [1.0, 2.0],
-            [0.0, 2.0],
-            [0.0, 1.0],
-            [0.0, 0.0],
-        ]).into_dyn();
-
-        b.iter(|| {
-            for _ in 0..100 {
-                let n = test::black_box(&the_points);
-                iter(n, 1.0);
-            }
-        });
     }
 
     #[test]
@@ -174,7 +151,7 @@ fn distance_segment<'a, 'b>(
     // println!("start {}", start);
     // println!("end {}", end);
 
-    if start.all_close(end, 1e-8) {
+    if start.abs_diff_eq(end, 1e-8) {
         // println!("diff is zero");
         return norm(point, start);
     }
@@ -278,12 +255,8 @@ pub fn mask(
         }
     }
     Array::from_shape_vec(
-        (
-            final_points.len() / points.shape()[1],
-            points.shape()[1]
-        ),
+        (final_points.len() / points.shape()[1], points.shape()[1]),
         final_points,
-    ).expect(
-        "Unable to build"
     )
+    .expect("Unable to build")
 }
