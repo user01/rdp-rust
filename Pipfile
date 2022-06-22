@@ -4,7 +4,7 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-numpy = ">=1.16.0,<=1.19.5"  # specific to build env to prevent errors in 3.6 and older python versions
+numpy = ">=1.16.0,<1.22.1"  # specific to build env to prevent errors in 3.6 and older python versions
 
 [dev-packages]
 twine = ">=3.0.0,<4.0.0"
