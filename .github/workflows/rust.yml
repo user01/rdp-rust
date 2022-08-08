@@ -35,7 +35,7 @@ jobs:
     - name: Build wheel
       run: maturin build --release --no-sdist
     - name: Install wheel
-      run: pip install $(python -c "import platform; import glob; print(glob.glob(f'target/wheels/*cp3{platform.python_version_tuple()[1]}*.whl')[0])")
+      run: pip install $(python -c "import platform; import glob; print(glob.glob(f'target/wheels/rdp_rust*abi3*.whl')[0])")
     - name: Windows Install PyTest
       run: pip install --upgrade --force-reinstall pytest
       if: contains(matrix.os, 'windows')
