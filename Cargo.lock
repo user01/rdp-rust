@@ -414,7 +414,7 @@ dependencies = [
 
 [[package]]
 name = "rdp-rust"
-version = "0.5.2"
+version = "0.5.3"
 dependencies = [
  "ndarray",
  "numpy",
