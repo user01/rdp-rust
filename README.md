@@ -5,7 +5,7 @@
 
 Binary version of MIT licensed RDP [implementation](https://github.com/fhirschmann/rdp) by [fhirschmann](https://github.com/fhirschmann).
 
-Binary wheels are built for Python 3.6, 3.7, 3.8, and 3.9.
+Binary wheels are built for Python >= 3.7
 
 Benchmarks show approximately 60x speed increase.
 
