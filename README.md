@@ -26,7 +26,7 @@ The inputs must all be floating points values.
 >>> from rdp_rust import reduce_points
 
 >>> arr = np.array([5.0, 0, 4, 0, 3, 0, 3, 1, 3, 2]).reshape(5, 2)
->>> reduce_points(small_arr, 0.2)
+>>> reduce_points(arr, 0.2)
 array([[5., 0.],
        [3., 0.],
        [3., 2.]])
